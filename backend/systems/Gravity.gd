@@ -35,6 +35,5 @@ static func calculate(delta: float, bodies: Array[Body]) -> Array[GravityResult]
 		var position = body_1.position + (body_1.velocity * delta) + (0.5 * acceleration * (delta ** 2))
 		var velocity = body_1.velocity + (0.5 * (body_1.acceleration + acceleration) * delta)
 		results.append(GravityResult.new(body_1.id, position, velocity, acceleration))
-		print(body_1.position)
 
 	return results

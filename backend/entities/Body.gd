@@ -38,3 +38,8 @@ func update_motion(_position: Vector2 = self.position, _velocity: Vector2 = self
     self.position = _position
     self.velocity = _velocity
     self.acceleration = _acceleration
+
+func update_motion_naturally(delta: float):
+    # When force (incl. gravitational force) is not applied to a body, it doesn't have any acceleration
+    # Inertia
+    self.position += (delta * self.velocity)

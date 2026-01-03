@@ -2,6 +2,9 @@ class_name Physics
 
 static var G = SimConfig.G
 
+static func get_momentum(body: Body) -> Vector2:
+    return body.mass * body.velocity
+
 static func get_gravitational_bind_energy(body: Body) -> float:
     return G * (body.mass ** 2) / body.radius
 
@@ -27,7 +30,7 @@ static func merge_bodies(body_1: Body, body_2: Body):
     else:
         new_position = body_1.position if is_body_1_black_hole else body_2.position
 
-    var new_velocity = body_1.velocity - body_2.velocity
+    var new_velocity = (get_momentum(body_1) + get_momentum(body_2)) / (body_1.mass + body_2.mass)
 
     return {
         "mass": total_mass,

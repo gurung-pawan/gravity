@@ -55,3 +55,6 @@ static func update_step(delta: float):
     if bodies_array.size() >= 2:
         update_gravity(TIME_SCALE * delta, bodies_array)
         update_collision(bodies_array)
+    else:
+        for x in bodies_array:
+            x.update_motion_naturally(TIME_SCALE * delta)
