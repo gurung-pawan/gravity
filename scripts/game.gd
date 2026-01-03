@@ -20,10 +20,12 @@ func remove_body_by_id(_id: int):
 	self.bodies.erase(_id)
 
 func _ready() -> void:
-	var id1 = Sim.make_body(10, 10, Vector2(0, 0), Vector2(10, 10), Body.BodyType.SMALL_BODY)
+	var id1 = Sim.make_body(10, 10, Vector2(100, 0), Vector2(-5, 0), Body.BodyType.SMALL_BODY)
 	var id2 = Sim.make_body(10, 10, Vector2(100, 100), Vector2(0, 0), Body.BodyType.SMALL_BODY)
+	var id3 = Sim.make_body(10, 10, Vector2(-100, -100), Vector2(10, 15), Body.BodyType.SMALL_BODY)
 	add_body(Sim.get_body_by_id(id1))
 	add_body(Sim.get_body_by_id(id2))
+	add_body(Sim.get_body_by_id(id3))
 
 func _physics_process(delta: float) -> void:
 	Sim.update_step(delta)
