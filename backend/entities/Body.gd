@@ -1,5 +1,8 @@
 class_name Body
 
+const MINIMUM_MASS = 0.1
+const MINIMUM_RADIUS = 0.1
+
 enum BodyType {
     SMALL_BODY = 0,
     PLANET,
@@ -15,10 +18,18 @@ var velocity: Vector2
 var acceleration: Vector2 = Vector2.ZERO
 var type: BodyType
 
-func _init(_id: int, _mass: float = 1.0, _radius: float = 1.0, _position: Vector2 = Vector2.ZERO, _velocity: Vector2 = Vector2.ZERO, _type: BodyType = BodyType.SMALL_BODY) -> void:
+func _init(
+    _id: int,
+    _mass: float = 1.0,
+    _radius: float = 1.0,
+    _position: Vector2 = Vector2.ZERO,
+    _velocity: Vector2 = Vector2.ZERO,
+    _type: BodyType = BodyType.SMALL_BODY
+) -> void:
+
     self.id = _id
-    self.mass = _mass
-    self.radius = _radius
+    self.mass = max(_mass, MINIMUM_MASS)
+    self.radius = max(_radius, MINIMUM_RADIUS)
     self.position = _position
     self.velocity = _velocity
     self.type = _type

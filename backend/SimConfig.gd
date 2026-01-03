@@ -1,8 +1,9 @@
 class_name SimConfig
 
-static var G: float = 1.0
+static var G: float = 1000.0
 static var MERGE_CONSTANT: float = 1.0
 static var EPSILON: float = 0.01
+static var TIME_SCALE: float = 5.0
 
 
 static var PLANET_COMPACTNESS_THRESHOLD: float = 200
