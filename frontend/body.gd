@@ -4,7 +4,7 @@ var id: int
 var radius: float
 
 func _draw() -> void:
-    draw_circle(Vector2.ZERO, radius, Color.BLUE)
+    draw_circle(Vector2.ZERO, radius, Color.WHITE)
 
 func init(_id: int, _radius: float, _position: Vector2):
     self.id = _id

@@ -8,6 +8,8 @@ static var merge_threshold = SimConfig.MERGE_THRESHOLD
 static var eps = SimConfig.EPSILON
 static var Q = SimConfig.MERGE_CONSTANT
 static var G = SimConfig.G
+static var min_mass = SimConfig.MINIMUM_MASS_FOR_FRAGMENTATION
+static var min_radius = SimConfig.MINIMUM_RADIUS_FOR_FRAGMENTATION
 
 enum CollisionType {
 	MERGE = 0,
@@ -38,6 +40,9 @@ static func detect_form(body_1: Body, body_2: Body) -> Body.BodyType:
 	return Body.BodyType.BLACK_HOLE
 
 static func detect_type(body_1: Body, body_2: Body) -> CollisionType:
+
+	if body_1.radius < min_radius or body_2.radius < min_radius or body_1.mass < min_mass or body_2.mass < min_mass:
+		return CollisionType.MERGE
 
 	var kinetic_energy = Physics.get_kinetic_energy(body_1, body_2)
 	var gbe_1 = Physics.get_gravitational_bind_energy(body_1)

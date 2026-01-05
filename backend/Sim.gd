@@ -43,17 +43,25 @@ static func update_collision(bodies_array: Array[Body]):
                 new_body_data["velocity"],
                 data.form
             )
-            remove_body_by_id(data.ids[0])
-            remove_body_by_id(data.ids[1])
-            removed_id[data.ids[0]] = true
-            removed_id[data.ids[1]] = true
         else:
-            pass
+            var all_bodies_data = Physics.fragment_bodies(body_1, body_2)
+            for body_data in all_bodies_data:
+                make_body(
+                    body_data["mass"],
+                    body_data["radius"],
+                    body_data["position"],
+                    body_data["velocity"],
+                    data.form
+                )
+        remove_body_by_id(data.ids[0])
+        remove_body_by_id(data.ids[1])
+        removed_id[data.ids[0]] = true
+        removed_id[data.ids[1]] = true
 
 static func update_step(delta: float):
     var bodies_array: Array[Body] = bodies.values()
     if bodies_array.size() >= 2:
-        update_gravity(TIME_SCALE * delta, bodies_array)
+        update_gravity(delta, bodies_array)
         update_collision(bodies_array)
     else:
         for x in bodies_array:

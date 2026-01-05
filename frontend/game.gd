@@ -4,6 +4,8 @@ var BodyScene = preload("res://scenes/body.tscn")
 
 @onready var bodies_node: Node = $BodiesNode
 
+var time_scale = SimConfig.TIME_SCALE
+
 var bodies: Dictionary[int, Node2D] = {}
 
 func add_body(body: Body):
@@ -20,15 +22,15 @@ func remove_body_by_id(_id: int):
 	self.bodies.erase(_id)
 
 func _ready() -> void:
-	var id1 = Sim.make_body(10, 10, Vector2(0, 0), Vector2(0, -40), Body.BodyType.SMALL_BODY)
-	var id2 = Sim.make_body(100, 30, Vector2(100, 0), Vector2(0, 0), Body.BodyType.SMALL_BODY)
-	var id3 = Sim.make_body(10, 10, Vector2(200, 0), Vector2(0, 40), Body.BodyType.SMALL_BODY)
+	var id1 = Sim.make_body(100, 20, Vector2(0, 0), Vector2(100, 0), Body.BodyType.SMALL_BODY)
+	var id2 = Sim.make_body(100, 30, Vector2(100, 0), Vector2(0, 0), Body.BodyType.BLACK_HOLE)
+	var id3 = Sim.make_body(100, 20, Vector2(200, 0), Vector2(0, 40), Body.BodyType.SMALL_BODY)
 	add_body(Sim.get_body_by_id(id1))
 	add_body(Sim.get_body_by_id(id2))
 	add_body(Sim.get_body_by_id(id3))
 
 func _physics_process(delta: float) -> void:
-	Sim.update_step(delta)
+	Sim.update_step(self.time_scale * delta)
 	for id in self.bodies:
 		if id not in Sim.bodies:
 			remove_body_by_id(id)
