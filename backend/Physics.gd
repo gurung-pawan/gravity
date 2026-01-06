@@ -4,6 +4,8 @@ static var G = SimConfig.G
 static var min_frag = SimConfig.MINIMUM_FRAGMENTATION
 static var max_frag = SimConfig.MAXIMUM_FRAGMENTATION
 static var eps = SimConfig.EPSILON
+static var minimum_mass = SimConfig.MINIMUM_MASS_FOR_FRAGMENTATION
+static var minimum_radius = SimConfig.MINIMUM_RADIUS_FOR_FRAGMENTATION
 
 static func rotate_vector(v: Vector2, t: float) -> Vector2:
 	return Vector2(
@@ -11,11 +13,34 @@ static func rotate_vector(v: Vector2, t: float) -> Vector2:
 		v.x * sin(t) + v.y * cos(t)
 	)
 
+static func get_random_sum_array(sum: float, length: int, minimum: float) -> Array:
+
+	var remaining = sum - length * minimum
+	var nums = []
+	var total = 0.0
+
+	for i in length:
+		var v = randf()
+		nums.append(v)
+		total += v
+
+	var result = []
+	var running_sum = 0.0
+
+	for i in length - 1:
+		var val = minimum + (nums[i] / total) * remaining
+		result.append(val)
+		running_sum += val
+
+	result.append(sum - running_sum)
+
+	return result
+
 static func get_momentum(body: Body) -> Vector2:
 	return body.mass * body.velocity
 
 static func get_gravitational_bind_energy(body: Body) -> float:
-	return G * body.mass / body.radius
+	return G * (body.mass ** 2) / body.radius
 
 static func get_kinetic_energy(body_1: Body, body_2: Body) -> float:
 	var reduced_mass = (body_1.mass * body_2.mass) / (body_1.mass + body_2.mass)
@@ -25,6 +50,37 @@ static func get_kinetic_energy(body_1: Body, body_2: Body) -> float:
 
 static func fragment_bodies(body_1: Body, body_2: Body):
 	var results = []
+
+	var relative_velocity = body_1.velocity - body_2.velocity
+
+	var total_radius = sqrt(body_1.radius ** 2 + body_2.radius ** 2) 
+	var total_mass = body_1.mass + body_2.mass
+
+	if total_mass < minimum_mass or total_radius < minimum_radius:
+		return results
+
+	var amount_of_fragments = randi_range(min_frag, max_frag)
+
+	var mass_allocation = get_random_sum_array(total_mass, amount_of_fragments, minimum_mass)
+	var radius_allocation = get_random_sum_array(total_radius, amount_of_fragments, minimum_radius)
+
+	var collision_point = (body_1.position + body_2.position) / 2.0
+
+	for i in amount_of_fragments:
+		var theta = randf_range(-PI, PI)
+		var velocity = rotate_vector(relative_velocity, theta) * randf_range(eps, 0.7)
+
+		var r = total_radius * sqrt(randf())
+		var offset = Vector2(r * cos(theta), r * sin(theta))
+		var position = collision_point + (2 * offset)
+
+		results.append({
+			"mass": mass_allocation[i],
+			"radius": radius_allocation[i],
+			"position": position,
+			"velocity": velocity
+		})
+
 	return results
 
 static func merge_bodies(body_1: Body, body_2: Body):
