@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0lidde26hgrt"]
+[gd_scene load_steps=3 format=3 uid="uid://c0lidde26hgrt"]
 
 [ext_resource type="Script" uid="uid://doepuwju0jtih" path="res://frontend/body.gd" id="1_jmcoc"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jmcoc"]
+
 [node name="Body" type="Node2D"]
+material = SubResource("CanvasItemMaterial_jmcoc")
 script = ExtResource("1_jmcoc")

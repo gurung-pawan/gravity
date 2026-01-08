@@ -3,13 +3,12 @@ class_name Collision
 static var planet_threshold = SimConfig.PLANET_COMPACTNESS_THRESHOLD
 static var star_threshold = SimConfig.STAR_COMPACTNESS_THRESHOLD
 static var black_hole_threshold = SimConfig.BLACK_HOLE_COMPACTNESS_THRESHOLD
-static var merge_threshold = SimConfig.MERGE_THRESHOLD
 
 static var eps = SimConfig.EPSILON
 static var Q = SimConfig.MERGE_CONSTANT
 static var G = SimConfig.G
-static var min_mass = SimConfig.MINIMUM_MASS_FOR_FRAGMENTATION
-static var min_radius = SimConfig.MINIMUM_RADIUS_FOR_FRAGMENTATION
+static var min_mass = SimConfig.MINIMUM_MASS
+static var min_radius = SimConfig.MINIMUM_RADIUS
 
 enum CollisionType {
 	MERGE = 0,
@@ -21,23 +20,9 @@ class CollisionResult:
 	var type: CollisionType
 	var form: Body.BodyType
 
-	func _init(_ids: Array, _type: CollisionType, _form: Body.BodyType):
+	func _init(_ids: Array, _type: CollisionType):
 		self.ids = _ids
 		self.type = _type
-		self.form = _form
-
-static func detect_form(body_1: Body, body_2: Body) -> Body.BodyType:
-	var total_mass = body_1.mass + body_2.mass
-	var total_radius = sqrt(body_1.radius ** 2 + body_2.radius ** 2)
-	var compactness = total_mass / total_radius
-
-	if compactness < planet_threshold:
-		return Body.BodyType.SMALL_BODY
-	elif compactness < star_threshold:
-		return Body.BodyType.PLANET
-	elif compactness < black_hole_threshold:
-		return Body.BodyType.STAR
-	return Body.BodyType.BLACK_HOLE
 
 static func detect_type(body_1: Body, body_2: Body) -> CollisionType:
 
@@ -71,8 +56,7 @@ static func check(bodies: Array[Body]) -> Array[CollisionResult]:
 			if distance < sum_of_radius:
 				results.append(CollisionResult.new(
 					[body_1.id, body_2.id],
-					detect_type(body_1, body_2),
-					detect_form(body_1, body_2),  
+					detect_type(body_1, body_2)
 				))
 
 	return results
