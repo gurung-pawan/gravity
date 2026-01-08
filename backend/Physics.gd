@@ -99,8 +99,7 @@ static func merge_bodies(body_1: Body, body_2: Body):
 			new_position = body_2.position
 	else:
 		new_position = body_1.position if is_body_1_black_hole else body_2.position
-		new_radius = log(total_mass / (PI * bh_density))
-
+		new_radius = sqrt(total_mass / (PI * bh_density))
 
 	var new_velocity = (get_momentum(body_1) + get_momentum(body_2)) / (body_1.mass + body_2.mass)
 

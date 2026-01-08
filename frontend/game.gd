@@ -29,7 +29,7 @@ func remove_body_by_id(_id: int):
 	self.bodies.erase(_id)
 
 func _ready() -> void:
-	var id1 = Sim.make_body(5000, 2, Vector2(0, 0), Vector2(0, 0))
+	var id1 = Sim.make_body(5000, 10, Vector2(0, 0), Vector2(0, 0))
 	var id3 = Sim.make_body(10000, 20, Vector2(400, 0), Vector2(0, 0))
 	add_body(Sim.get_body_by_id(id1))
 	add_body(Sim.get_body_by_id(id3))
