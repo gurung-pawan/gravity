@@ -50,7 +50,7 @@ func find_color() -> void:
 func _draw() -> void:
     draw_circle(Vector2.ZERO, radius, self.color)
     if self.type == Body.BodyType.BLACK_HOLE:
-        var ring_color = Color(0.9, 0.15, 0, radius)
+        var ring_color = Color(0.9, 0.15, 0.0, radius)
         draw_arc(Vector2.ZERO, self.radius, 0.0, TAU, 64, ring_color, 0.5)
 
 func init(_id: int, _mass: float, _radius: float, _position: Vector2, _type: Body.BodyType):

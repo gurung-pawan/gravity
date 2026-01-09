@@ -69,7 +69,7 @@ static func fragment_bodies(body_1: Body, body_2: Body):
 
 	for i in amount_of_fragments:
 		var theta = randf_range(-PI, PI)
-		var velocity = rotate_vector(relative_velocity, theta) * randf_range(eps, 0.5)
+		var velocity = rotate_vector(relative_velocity, theta) * randf_range(eps, 0.2)
 
 		var r = pow(mass_allocation[i] / (PI * density), 0.5)
 		var offset = Vector2(r * cos(theta), r * sin(theta))

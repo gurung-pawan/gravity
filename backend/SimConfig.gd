@@ -7,7 +7,7 @@ static var TIME_SCALE: float = 1
 
 static var PLANET_COMPACTNESS_THRESHOLD: float = 0.01
 static var STAR_COMPACTNESS_THRESHOLD: float = 0.6
-static var BLACK_HOLE_COMPACTNESS_THRESHOLD: float = 15.0
+static var BLACK_HOLE_COMPACTNESS_THRESHOLD: float = 150.0
 
 static var MINIMUM_FRAGMENTATION: float = 10
 static var MAXIMUM_FRAGMENTATION: float = 20

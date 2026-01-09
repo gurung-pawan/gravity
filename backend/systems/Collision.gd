@@ -26,6 +26,9 @@ class CollisionResult:
 
 static func detect_type(body_1: Body, body_2: Body) -> CollisionType:
 
+	if body_1.type == Body.BodyType.BLACK_HOLE or body_2.type == Body.BodyType.BLACK_HOLE:
+		return CollisionType.MERGE
+
 	if body_1.radius < min_radius or body_2.radius < min_radius or body_1.mass < min_mass or body_2.mass < min_mass:
 		return CollisionType.MERGE
 

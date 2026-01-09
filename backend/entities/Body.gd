@@ -34,7 +34,8 @@ func _init(
 	_mass: float = 1.0,
 	_radius: float = 1.0,
 	_position: Vector2 = Vector2.ZERO,
-	_velocity: Vector2 = Vector2.ZERO
+	_velocity: Vector2 = Vector2.ZERO,
+	_type = null
 ) -> void:
 
 	self.id = _id
@@ -42,7 +43,7 @@ func _init(
 	self.radius = max(_radius, minimum_radius)
 	self.position = _position
 	self.velocity = _velocity
-	self.type = find_type()
+	self.type = find_type() if _type == null else _type
 
 func update_motion(_position: Vector2 = self.position, _velocity: Vector2 = self.velocity, _acceleration: Vector2 = self.acceleration):
 	self.position = _position

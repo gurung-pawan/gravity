@@ -5,9 +5,9 @@ static var body_count: int = 0
 static var TIME_SCALE = SimConfig.TIME_SCALE
 
 # ONLY ENTRY TO MAKING BODY
-static func make_body(mass: float = 1.0, radius: float = 1.0, position: Vector2 = Vector2.ZERO, velocity: Vector2 = Vector2.ZERO) -> int:
+static func make_body(mass: float = 1.0, radius: float = 1.0, position: Vector2 = Vector2.ZERO, velocity: Vector2 = Vector2.ZERO, type = null) -> int:
 
-	var body = Body.new(body_count, mass, radius, position, velocity)
+	var body = Body.new(body_count, mass, radius, position, velocity, type)
 	bodies[body.id] = body
 	body_count += 1
 	return body.id
@@ -34,13 +34,25 @@ static func update_collision(bodies_array: Array[Body]):
 
 		var body_1 = get_body_by_id(data.ids[0])
 		var body_2 = get_body_by_id(data.ids[1])
+		var new_type: Body.BodyType
+
+		if body_1.type == Body.BodyType.BLACK_HOLE or body_2.type == Body.BodyType.BLACK_HOLE:
+			new_type = Body.BodyType.BLACK_HOLE
+		elif body_1.type == Body.BodyType.STAR or body_2.type == Body.BodyType.STAR:
+			new_type = Body.BodyType.STAR
+		elif body_1.type == Body.BodyType.PLANET or body_2.type == Body.BodyType.PLANET:
+			new_type = Body.BodyType.PLANET
+		else:
+			new_type = Body.BodyType.SMALL_BODY
+
 		if data.type == Collision.CollisionType.MERGE:
 			var new_body_data = Physics.merge_bodies(body_1, body_2)
 			make_body(
 				new_body_data["mass"],
 				new_body_data["radius"],
 				new_body_data["position"],
-				new_body_data["velocity"]
+				new_body_data["velocity"],
+				new_type
 			)
 		else:
 			var all_bodies_data = Physics.fragment_bodies(body_1, body_2)
