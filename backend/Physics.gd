@@ -1,5 +1,7 @@
 class_name Physics
 
+
+
 static var G = SimConfig.G
 static var min_frag = SimConfig.MINIMUM_FRAGMENTATION
 static var max_frag = SimConfig.MAXIMUM_FRAGMENTATION
@@ -8,11 +10,15 @@ static var minimum_mass = SimConfig.MINIMUM_MASS
 static var minimum_radius = SimConfig.MINIMUM_RADIUS
 static var bh_density = SimConfig.BLACK_HOLE_COMPACTNESS_THRESHOLD
 
+
+
 static func rotate_vector(v: Vector2, t: float) -> Vector2:
 	return Vector2(
 		v.x * cos(t) - v.y * sin(t),
 		v.x * sin(t) + v.y * cos(t)
 	)
+
+
 
 static func get_random_sum_array(sum: float, length: int, minimum: float) -> Array:
 
@@ -37,17 +43,25 @@ static func get_random_sum_array(sum: float, length: int, minimum: float) -> Arr
 
 	return result
 
+
+
 static func get_momentum(body: Body) -> Vector2:
 	return body.mass * body.velocity
 
+
+
 static func get_gravitational_bind_energy(body: Body) -> float:
 	return G * (body.mass ** 2) / body.radius
+
+
 
 static func get_kinetic_energy(body_1: Body, body_2: Body) -> float:
 	var reduced_mass = (body_1.mass * body_2.mass) / (body_1.mass + body_2.mass)
 	var relative_velocity_sqr = (body_1.velocity - body_2.velocity).length_squared()
 
 	return 0.5 * reduced_mass * relative_velocity_sqr
+
+
 
 static func fragment_bodies(body_1: Body, body_2: Body):
 	var results = []
@@ -69,11 +83,11 @@ static func fragment_bodies(body_1: Body, body_2: Body):
 
 	for i in amount_of_fragments:
 		var theta = randf_range(-PI, PI)
-		var velocity = rotate_vector(relative_velocity, theta) * randf_range(eps, 0.2)
+		var velocity = rotate_vector(relative_velocity, theta) * randf_range(eps, 0.05)
 
 		var r = pow(mass_allocation[i] / (PI * density), 0.5)
 		var offset = Vector2(r * cos(theta), r * sin(theta))
-		var position = collision_point + (r * offset)
+		var position = collision_point + offset
 
 		results.append({
 			"mass": mass_allocation[i],
@@ -83,6 +97,8 @@ static func fragment_bodies(body_1: Body, body_2: Body):
 		})
 
 	return results
+
+
 
 static func merge_bodies(body_1: Body, body_2: Body):
 	var total_mass = body_1.mass + body_2.mass

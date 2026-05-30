@@ -14,7 +14,7 @@ func attach_shader():
     var mat = ShaderMaterial.new()
     mat.shader = preload("res://frontend/shaders/star_shader.gdshader")
     mat.set_shader_parameter("glow_color", self.color)
-    mat.set_shader_parameter("glow_intensity", self.radius * 0.5)
+    mat.set_shader_parameter("glow_intensity", self.radius * 0.5 * log(self.mass))
     self.material = mat
 
 func get_random_planet_color() -> Color:

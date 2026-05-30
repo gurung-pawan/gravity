@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var min_zoom: float = 0.1
+@export var min_zoom: float = 0.001
 @export var max_zoom: float = 200.0
 @export var zoom_speed: float = 0.1
 @export var drag_speed: float = 1.0

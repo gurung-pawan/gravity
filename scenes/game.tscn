@@ -10,8 +10,9 @@ glow_enabled = true
 glow_intensity = 1.0
 glow_blend_mode = 0
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" node_paths=PackedStringArray("ui")]
 script = ExtResource("1_uwrxv")
+ui = NodePath("CanvasLayer/Ui")
 
 [node name="CameraManager" parent="." instance=ExtResource("2_yqjtg")]
 
@@ -24,3 +25,5 @@ environment = SubResource("Environment_uwrxv")
 
 [node name="Ui" parent="CanvasLayer" instance=ExtResource("3_lnu2h")]
 pivot_offset = Vector2(-484, 1276)
+
+[connection signal="cleared" from="CanvasLayer/Ui" to="." method="_on_ui_cleared"]

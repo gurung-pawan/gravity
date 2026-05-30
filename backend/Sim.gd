@@ -69,10 +69,13 @@ static func update_collision(bodies_array: Array[Body]):
 		removed_id[data.ids[1]] = true
 
 static func update_step(delta: float):
-	var bodies_array: Array[Body] = bodies.values()
-	if bodies_array.size() >= 2:
-		update_gravity(delta, bodies_array)
-		update_collision(bodies_array)
+	if bodies.values().size() >= 2:
+		update_gravity(delta, bodies.values())
+		update_collision(bodies.values())
 	else:
-		for x in bodies_array:
+		for x in bodies.values():
 			x.update_motion_naturally(TIME_SCALE * delta)
+
+static func clear_bodies():
+	bodies.clear()
+	body_count = 0

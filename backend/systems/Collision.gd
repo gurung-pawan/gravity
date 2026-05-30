@@ -36,8 +36,8 @@ static func detect_type(body_1: Body, body_2: Body) -> CollisionType:
 	var gbe_1 = Physics.get_gravitational_bind_energy(body_1)
 	var gbe_2 = Physics.get_gravitational_bind_energy(body_2)
 
-	var fragments_1: bool = kinetic_energy > gbe_1
-	var fragments_2: bool = kinetic_energy > gbe_2
+	var fragments_1: bool = kinetic_energy > gbe_1 * Q
+	var fragments_2: bool = kinetic_energy > gbe_2 * Q
 
 	if fragments_1 and fragments_2:
 		return CollisionType.FRAGMENT
